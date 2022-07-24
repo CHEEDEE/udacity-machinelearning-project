@@ -1,1 +1,76 @@
-<paste log output from Kubernetes-mediated prediction, here>
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ dockerpath="cheedee/udacity-housing-app"./run_kubernetes.sh^C
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ ./run_kubernetes.sh
+pod/udacity-housing-app created
+NAME                  READY   STATUS              RESTARTS   AGE
+udacity-housing-app   0/1     ContainerCreating   0          0s
+error: unable to forward port because pod is not running. Current status=Pending
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ kubectl get pods
+NAME                  READY   STATUS              RESTARTS   AGE
+udacity-housing-app   0/1     ContainerCreating   0          12s
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ kubectl get pod
+NAME                  READY   STATUS    RESTARTS   AGE
+udacity-housing-app   1/1     Running   0          83s
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ ./run_kubernetes.sh
+Error from server (AlreadyExists): pods "udacity-housing-app" already exists
+NAME                  READY   STATUS    RESTARTS   AGE
+udacity-housing-app   1/1     Running   0          87s
+Forwarding from 0.0.0.0:8000 -> 80
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ ./make_prediction.sh
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$
+
+(.devops) ubuntu@ip-172-31-0-92:~/udacity-machinelearning-project$ kubectl logs udacity-housing-app
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 321-352-124
+127.0.0.1 - - [24/Jul/2022 18:06:13] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [24/Jul/2022 18:06:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [24/Jul/2022 18:06:25] "GET /favicon.ico HTTP/1.1" 404 -
+[2022-07-24 18:07:05,914] INFO in app: JSON payload:
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2022-07-24 18:07:05,928] INFO in app: Inference payload DataFrame:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-07-24 18:07:05,941] INFO in app: Scaling Payload:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-07-24 18:07:05,945] INFO in app: Prediction value is: [20.35373177134412]
+127.0.0.1 - - [24/Jul/2022 18:07:05] "POST /predict HTTP/1.1" 200 -
+127.0.0.1 - - [24/Jul/2022 18:09:46] "GET / HTTP/1.1" 200 -
+[2022-07-24 18:10:02,523] INFO in app: JSON payload:
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2022-07-24 18:10:02,549] INFO in app: Inference payload DataFrame:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-07-24 18:10:02,573] INFO in app: Scaling Payload:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-07-24 18:10:02,576] INFO in app: Prediction value is: [20.35373177134412]
+127.0.0.1 - - [24/Jul/2022 18:10:02] "POST /predict HTTP/1.1" 200 -
+[2022-07-24 18:11:46,380] INFO in app: JSON payload:
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2022-07-24 18:11:46,400] INFO in app: Inference payload DataFrame:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-07-24 18:11:46,413] INFO in app: Scaling Payload:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2022-07-24 18:11:46,418] INFO in app: Prediction value is: [20.35373177134412]
+127.0.0.1 - - [24/Jul/2022 18:11:46] "POST /predict HTTP/1.1" 200 -
